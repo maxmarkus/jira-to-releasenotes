@@ -90,7 +90,14 @@ def getCommitsSince(timestamp):
   
 # authenticates the user in JIRA and returns the Jira object
 def authenticateInJira():
-  user = raw_input('Enter your JIRA username (Enter to skip): ')
+  # a bit dirty, but with this it works on python2 (raw_input) and python3 (input)
+  newInput = ""
+  try: 
+    newInput = raw_input
+  except NameError:
+    newInput = input
+
+  user = newInput('Enter your JIRA username (Enter to skip): ')
   if len(user)==0:
     return None
   password = getpass.getpass('Enter your JIRA password (will be transferred insecurely): ')
